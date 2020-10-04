@@ -12,7 +12,6 @@ function handleFile (file, setData) {
     const ws = wb.Sheets[wsname]
     const data = XLSX.utils.sheet_to_json(ws, {header:1})
     setData(data)
-    console.log(data)
   }
 
   rABS
@@ -25,10 +24,11 @@ export default function () {
   const [header, setHeader] = useState([])
 
   function setData (data) {
+    const tableName = data.shift()
     setHeader(data.shift())
     setBody(data)
-    console.log(header)
-    console.log(body)
+    console.log('header', header)
+    console.log('body', body)
   }
 
   function handleChange (e) {
@@ -39,13 +39,18 @@ export default function () {
   }
 
   async function handleUpload () {
-    if (!body) {
+    console.log(header)
+    console.log(body)
+    if (body.length === 0) {
       window.alert('no data found')
     }
     try {
-      return await superagent
-        .post('http://localhost:3000/api/v1/upload')
-        .send(body)
+      const res = await superagent
+        .post('http://localhost:3333/api/v1/fruits')
+        .send({ fruits: body })
+      if (res.status === 200) {
+        window.alert('success')
+      }
     } catch (err) {
       console.log(err)
       window.alert(err.message)
