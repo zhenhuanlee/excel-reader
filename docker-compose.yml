@@ -1,7 +1,8 @@
 version: "3"
 services:
   server:
-    image: ruby:2.7.2
+    build:
+      context: ./server
     restart: always
     ports:
       - 3333:3000
@@ -11,12 +12,10 @@ services:
     volumes:
       - ./server:/app/server
     working_dir: /app/server
-    # command: bash -c "bundle install && rake db:migrate && rails s -b 0.0.0.0"
-    tty: true
-    entrypoint: sh
+    command: rails s -b 0.0.0.0
 
   client:
-    image: node:12.18.4-alpine
+    build: ./client
     restart: always
     ports:
       - 3000:3000
@@ -27,7 +26,7 @@ services:
       - ./client:/app/client
     working_dir: /app/client
     stdin_open: true
-    command: sh -c "yarn install && yarn start"
+    command: yarn start
 
   db:
     container_name: postgres
