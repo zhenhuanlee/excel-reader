@@ -6,9 +6,8 @@
 
 #### how to run
 1. `make dev`  
-2. `make setup`  
-3. wait for the server to install dependencies and run  
-4. visit `localhost:3000`  
+2. wait for the server to install dependencies and run  
+3. visit `localhost:3000`  
 
 #### 技术栈
 - backend java - javalin  
