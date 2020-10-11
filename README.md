@@ -7,10 +7,11 @@
 #### how to run
 1. `make dev`  
 2. `make setup`  
-3. visit `localhost:3000`
+3. wait for the server to install dependencies and run  
+4. visit `localhost:3000`  
 
 #### 技术栈
-- backend ruby - rails  
+- backend java - javalin  
 - frontend js - react  
 - db postgres  
 - container docker  

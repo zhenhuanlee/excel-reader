@@ -34,7 +34,7 @@ export default function (params) {
 
   function handleChange (event, selected) {
     console.log(selected)
-    setName((selected || {}).name)
+    setName((selected || null))
   }
 
   return (
@@ -42,7 +42,7 @@ export default function (params) {
       <div>
         <Autocomplete
           options={names}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={option => option}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
           onChange={handleChange}

@@ -1,8 +1,7 @@
 version: "3"
 services:
   server:
-    build:
-      context: ./server
+    image: gradle:jdk14
     restart: always
     ports:
       - 3333:3000
@@ -10,9 +9,11 @@ services:
     depends_on:
       - db
     volumes:
-      - ./server:/app/server
+      - ./server-java:/app/server
     working_dir: /app/server
-    command: rails s -b 0.0.0.0
+    command: gradle run
+    # tty: true
+    # entrypoint: bash
 
   client:
     build: ./client
@@ -34,5 +35,13 @@ services:
     restart: always
     ports:
       - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./server-java/vendor/init-database:/docker-entrypoint-initdb.d
     environment: 
       POSTGRES_PASSWORD: 123123
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fruits_dev
+
+volumes: 
+  postgres-data:

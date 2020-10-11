@@ -26,9 +26,14 @@ export default function () {
   function setData (data) {
     const tableName = data.shift()
     setHeader(data.shift())
-    setBody(data)
-    console.log('header', header)
-    console.log('body', body)
+    const fruits = []
+    for (let row of data) {
+      if (row.length > 0) {
+        fruits.push({ id: row[0], name: row[1], description: row[2] })
+      }
+    }
+    console.log(fruits)
+    setBody(fruits)
   }
 
   function handleChange (e) {
@@ -47,9 +52,10 @@ export default function () {
     try {
       const res = await superagent
         .post('http://localhost:3333/api/v1/fruits')
-        .send({ fruits: body })
+        .send(body)
       if (res.status === 200) {
         window.alert('success')
+        window.location.reload()
       }
     } catch (err) {
       console.log(err)
@@ -73,9 +79,9 @@ export default function () {
         <tbody>
           { body && body.map((b, index) => (
             <tr key={`tr-${index}`}>
-              { b && b.map((content, tdIndex) => (
-                <td key={`td-${index}-${tdIndex}`}>{content}</td>
-              )) }
+              <td key={`td-${index}-id`}>{b.id}</td>
+              <td key={`td-${index}-name`}>{b.name}</td>
+              <td key={`td-${index}-desc`}>{b.description}</td>
             </tr>
           )) }
         </tbody>
